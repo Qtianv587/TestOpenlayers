@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>openlayers绘制</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
+    <link href="ol.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <style type="text/css">
+        body,html,div,ul,li,iframe,p,img{
+            border:none;padding:0;margin:0;
+        }
+        html{
+            height: 100%;
+        }
+        body{
+            height: 100%;
+        }
+        #map{
+            width:100%;
+            height:100%;
+        }
+        /* 隐藏缩放按钮 */
+        #map .ol-zoom-in, #map .ol-zoom-out {display: none;}
+    </style>
+
+</head>
+<body>
+<div id="map" class="map"></div>
+<script>
+
+    // 初始给的中心点坐标。
+    var centerX = 10711315.612909358;
+    var centerY = 1900873.5099405567;
+    var extent = [centerX, centerY, centerX, centerY];
+
+    var layer1 = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url:'http://mt2.google.cn/vt/lyrs=y&hl=zh-CN&gl=CN&src=app&x={x}&y={y}&z={z}&s=G' //谷歌瓦片
+        }),
+    }); // 谷歌卫星地图（混合）
+    var layer2 = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url:'http://mt3.google.cn/vt/lyrs=t@131,r@216000000&hl=zh-CN&gl=CN&src=app&x={x}&y={y}&z={z}&s=Gal'//谷歌地形地图
+        }),
+    }); // 谷歌地形地图
+    var layerImage = new ol.layer.Image({
+        source: new ol.source.ImageStatic({
+            // url: 'images/mapTest.jpg',//这里添加静态图片的地址
+            url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1512636538327&di=1198aa77a3df42bd8046d0353502904c&imgtype=0&src=http%3A%2F%2Foss.p.t262.com%2Fcpic%2Fbc%2F2e%2Fdec7377951965a2d1dca25d006522ebc.jpg',
+            imageExtent: [centerX-500, centerY-500, centerX+500, centerY+500],// 地图坐标中的图像的范围。这是图像的[左，右，右，上]地图坐标
+        }),
+    }); // 自定义的地图图片
+
+    //实例一个map
+    var map = new ol.Map({
+        layers: [
+            // layer2,
+            layer1,
+            layerImage,
+        ],
+        target: 'map',
+        view: new ol.View({
+            center: [centerX, centerY], //3857坐标系
+            zoom: 17,//当前的放大度数
+            minZoom:5,//最小放大度数
+            maxZoom:19,//最大放大度数
+            // extent: extent, //限制中心的程度，换句话说，中心不能超出这个范围, 前后值一样(minx=maxx, miny=maxy)的话就无法移动。
+            //然后设置minZoom 和 maxZoom 一样大，就无法缩放。
+        }),
+        logo: false, // 禁用地图标志
+    });
+
+    //实例一个数据源获取feature
+    //实例化一个矢量图层Vector作为绘制层
+    var source = new ol.source.Vector();
+
+    //实例一个线(标记点)的全局变量
+    var geometry = new ol.geom.LineString(); //线,Point 点,Polygon 线
+
+    //散列点数组，放置的点的位置数据
+    var coordinate = [
+        [10711293.51783087, 1900921.581665377],
+        [10711332.930673579, 1900920.9845010934],
+        [10711337.707987847, 1900825.4382157368],
+        [10711293.51783087, 1900826.0353800203],
+    ];
+
+    //添加标记点
+    function addPonitToGeometry(arr) {
+        for (var i = 0; i < arr.length; i++) {
+            geometry.appendCoordinate(arr[i]);
+        }
+    }
+    addPonitToGeometry(coordinate);
+
+    var LineStringFeature = new ol.Feature(geometry); //绘制线的数据
+
+    //将线添加到Vector绘制层上
+    source.addFeature(LineStringFeature);
+    var vectorLayer = new ol.layer.Vector({
+        source: source,
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 255, 255, 0.2)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: '#f00',
+                width: 4
+            }),
+            image: new ol.style.Circle({
+                radius: 2,
+                fill: new ol.style.Fill({
+                    color: '#f00'
+                })
+            })
+        })
+    });
+    map.addLayer(vectorLayer); //将绘制层添加到地图容器中
+
+    // 最后一个标记点的坐标
+    var lngX = coordinate[3][0];
+    var lngY = coordinate[3][1];
+
+    var interval = setInterval(function(){
+        lngX = lngX - Math.random() * 30;
+        lngY = lngY + Math.random() * 30;
+        var newPoint = [lngX, lngY];
+        coordinate.shift();
+        coordinate.push(newPoint);
+        geometry.setCoordinates(coordinate);
+    }, 300);
+
+    setTimeout(function(){
+        clearInterval(interval);
+    }, 5000);
+
+
+    // webSocket部分，用来不停的获取数据
+    var websocket;
+    var host = "ws://echo.websocket.org/";//声明host注意：是ws协议
+    //判断当前浏览器是否支持WebSocket
+    if('WebSocket' in window){
+        websocket = new WebSocket(host);
+    }
+    else{
+        alert('当前浏览器不支持WebSocket');
+    }
+
+    websocket.onopen = function (evt) { onOpen(evt) };
+    websocket.onclose = function (evt) { onClose(evt) };
+    websocket.onmessage = function (evt) { onMessage(evt) };
+    websocket.onerror = function (evt) { onError(evt) };
+    function onOpen(evt) {
+        console.log("Connected to WebSocket server.");
+    }
+    function onClose(evt) {
+        console.log("Disconnected");
+    }
+    function onMessage(evt) {
+        console.log('Retrieved data from server: ' + evt.data);
+    }
+    function onError(evt) {
+        console.log('Error occured: ' + evt.data);
+    }
+
+    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+    window.onbeforeunload = function(){
+        onClose(evt);
+    }
+
+</script>
+</body>
+</html>

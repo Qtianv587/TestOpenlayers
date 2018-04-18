@@ -1,0 +1,286 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ol</title>
+    <!--<link href="https://openlayers.org/en/v4.5.0/css/ol.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="ol.css" type="text/css">
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+</head>
+
+<body>
+<div id="map" style="width: 100%"></div>
+<script type="text/javascript">
+
+    var GeoJsonLayer1 = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\jianganhe.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayer2 = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\shahe.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayer3 = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\tuojiang.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayer4 = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\xuyanhe.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayer5 = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\zoumahe.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayer6 = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\主河道.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerA = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\A河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerB = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\B河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerC = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\C河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerD = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\D河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerE = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\E河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerF = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\F河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerG = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\G河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerH = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\H河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerI = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\I河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerJ = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\J河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerK = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\K河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerL = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\L河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerM = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\M河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerN = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\N河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerO = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\O河段网格数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+
+    var GeoJsonLayerX = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\河网_流量数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+    var GeoJsonLayerY = new ol.layer.Vector({
+        title: 'add Layer',
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // url: '.\\排污口.geojson',
+            url: '.\\json_file\\河网_方向数据.json',
+            format:new ol.format.GeoJSON()
+        }),
+    });
+
+    var map = new ol.Map({
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            }),
+            // GeoJsonLayer1,
+            // GeoJsonLayer2,
+            // GeoJsonLayer3,
+            // GeoJsonLayer4,
+            // GeoJsonLayer5,
+            // GeoJsonLayer6,
+            // GeoJsonLayerA,
+            // GeoJsonLayerB,
+            // GeoJsonLayerC,
+            // GeoJsonLayerD,
+            // GeoJsonLayerE,
+            // GeoJsonLayerF,
+            // GeoJsonLayerG,
+            // GeoJsonLayerH,
+            // GeoJsonLayerI,
+            // GeoJsonLayerJ,
+            // GeoJsonLayerK,
+            // GeoJsonLayerL,
+            // GeoJsonLayerM,
+            // GeoJsonLayerN,
+            // GeoJsonLayerO,
+            GeoJsonLayerX,
+            // GeoJsonLayerY,
+        ],
+        target: 'map',
+        controls: ol.control.defaults({
+            attributionOptions: ({
+                collapsible: true
+            })
+        }),
+        view: new ol.View({
+            center: ol.proj.transform(
+                [104.0776, 30.5792], 'EPSG:4326', 'EPSG:3857'),
+            zoom: 10
+        })
+    });
+
+    // 监听singleclick事件
+    map.on('singleclick', function(e){
+        // alert(e.coordinate);
+        alert(ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326'));
+
+        // 通过getEventCoordinate方法获取地理位置，再转换为wgs84坐标，并弹出对话框显示
+        // alert(map.getEventCoordinate(e.originalEvent));
+        // alert(ol.proj.transform(map.getEventCoordinate(e.originalEvent), 'EPSG:3857', 'EPSG:4326'));
+
+        var lonlat = map.getCoordinateFromPixel(e.pixel);
+        // alert(lonlat);
+        // alert(ol.proj.transform(lonlat,"EPSG:3857", "EPSG:4326")); //由3857坐标系转为4326
+
+    })
+</script>
+<!--<script type="text/javascript" src="DrawLine.js"></script>-->
+<script type="text/javascript" src="DrawPoint.js"></script>
+</body>
+</html>

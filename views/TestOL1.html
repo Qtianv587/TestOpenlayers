@@ -12,47 +12,8 @@
 
 <script type="text/javascript" src="CommonVariable.js"></script>
 <script type="text/javascript" src="SetMap.js"></script>
+<script type="text/javascript" src="DrawLine.js"></script>
 
-<script type="text/javascript">
-
-    var fStyle1 = new ol.style.Style({                                //图形样式
-        fill: new ol.style.Fill({
-            color: 'red'
-        }),
-        stroke: new ol.style.Stroke({
-            color: 'red',
-            width: 2
-        }),
-        image: new ol.style.Circle({
-            radius: 7,
-            fill: new ol.style.Fill({
-                color: 'red'
-            })
-        })
-    });
-
-    var szDrawLayer = new ol.layer.Vector({
-        source: new ol.source.Vector()
-    });
-    // 定义画图要用到的坐标点数组
-    var point = [[121.61772816716022, 31.707848138871125], [120.61897851195846, 31.707848138871125],[120.61897851195846, 32.707848138871125]];
-
-    var dots1 = new Array();
-    for (var i = 0; i < point.length; i++) {
-        point[i] = ol.proj.transform(point[i], 'EPSG:4326', 'EPSG:3857');
-        dots1.push(point[i]);
-    }
-    var newFeature = new ol.Feature(new ol.geom.Polygon([dots1]));   //画图形
-    newFeature.setStyle(fStyle1);                //给图形添加样式
-    szDrawLayer.getSource().addFeature(newFeature);                 //地图添加图形
-    map.addLayer(szDrawLayer);
-
-
-    vectorLayer.getSource().addFeature(newFeature);                 //地图添加图形
-
-
-    map.addLayer(vectorLayer);
-</script>
 
 </body>
 </html>
